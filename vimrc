@@ -1,3 +1,5 @@
+set nu
+execute pathogen#infect()
 " must be first, changes behaviour of other settings
 set nocompatible
 " sane text files
