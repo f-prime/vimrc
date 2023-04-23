@@ -1,192 +1,83 @@
-set nu
-execute pathogen#infect()
-" must be first, changes behaviour of other settings
-set nocompatible
-" sane text files
-set fileformat=unix
-set encoding=utf-8
-" sane tabs
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-" convert all typed tabs to spaces
-set expandtab
-" syntax highlighting
-syntax on
-color koehler
-"make sure highlighting works all the way down long files
-autocmd BufEnter * :syntax sync fromstart
-" shift plus movement keys changes selection
-set keymodel=startsel,stopsel
-" allow cursor to be positioned one char past end of line
-" and apply operations to all of selection including last char
-set selection=exclusive
-" allow backgrounding buffers without writing them
-" and remember marks/undo for backgrounded buffers
-set hidden
-" Keep more context when scrolling off the end of a buffer
-set scrolloff=3
-
-" allow cursor keys to go right off end of one line, onto start of next
-set whichwrap+=<,>,[,]
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-" no line wrapping
-set nowrap
-
-" line numbers
-"set number
-
-" when joining lines, don't insert two spaces after punctuation
-set nojoinspaces
-
-" Make searches case-sensitive only if they contain upper-case characters
-set ignorecase
-set smartcase
-" show search matches as the search pattern is typed
-set incsearch
-" search-next wraps back to start of file
-set wrapscan
-" highlight last search matches
 set hlsearch
-" map key to dismiss search highlightedness
-map <bs> :noh<CR>
-
-" grep for word under cursor
-noremap <Leader>g :grep -rw '<C-r><C-w>' .<CR>
-
-" map F3 to search jump thru grep results from copen
-map <F3> :cnext<CR>
-
-" ctrl-s to save
-map <C-s> :w<CR>
-map! <C-s> <Esc>:w<CR>
-
-" make tab completion for files/buffers act like bash
-set wildmenu
-
-
-" display cursor co-ords at all times
+" set nuset tabstop=2 
+set nu
 set ruler
-set cursorline
+set softtabstop=0 
+set expandtab 
+set shiftwidth=2 
+set smarttab 
+set re=2
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+" set foldmethod=manualautocmd FileType python setlocal shiftwidth=4 softtabstop=4 smarttab expandtab foldmethod=manual
+nnoremap <C-a> :NERDTreeFind<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-m> :NERDTreeClose<CR>
+nnoremap <C-s> :set spell spelllang=en_us<CR>
+nnoremap <C-t> :tabnew<CR>
+nnoremap <C-u> :tabclose<CR>
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
+nnoremap <C-j> :tabmove -1<CR>
+nnoremap <C-k> :tabmove +1<CR>
+nnoremap <C-e> :m .-2<CR>
+nnoremap <C-d> :m .+1<CR>
+nnoremap <C-f> :CtrlP<CR>
+nnoremap <C-i> :foldclose<CR>
+nnoremap <C-o> :foldopen<CR>
 
-" display number of selected chars, lines, or size of blocks.
-set showcmd
+nnoremap <C-y> :CocDisable<CR>
+nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
+nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<cr>"
 
-" show matching brackets, etc, for 1/10th of a second
-set showmatch
-set matchtime=1
+autocmd BufNewFile,BufRead *.jpp set syntax=python
+" autocmd BufNewFile,BufRead *.hx set syntax=cs
 
+call plug#begin('~/.vim/plugged')
+set wrap!" Plug 'Shougo/deoplete.nvim'
 
-" enables filetype specific plugins
-filetype plugin on
-" enables filetype detection
-filetype on
+let g:coc_global_extensions = ['coc-jedi', 'coc-rls', 'coc-tsserver', 'coc-rust-analyzer', 'coc-clangd']
+let NerdTreeChDirMode=2
 
-if has("autocmd")
-    " Enable file type detection.
-    " Use the default filetype settings, so that mail gets 'tw' set to 72,
-    " 'cindent' is on in C files, etc.
-    " Also load indent files, to automatically do language-dependent indenting.
-    filetype plugin indent on
-    
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'ocaml/vim-ocaml'
+Plug 'Tetralux/odin.vim'
+Plug 'iamcco/coc-angular'
+Plug 'evanleck/vim-svelte'
+Plug 'zah/nim.vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'makerj/vim-pdf'
+Plug 'Quramy/tsuquyomi'
+Plug 'ziglang/zig.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'lark-parser/vim-lark-syntax'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'scrooloose/nerdtree'
+Plug 'jdonaldson/vaxe'
+Plug 'calviken/vim-gdscript3'
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
+"Plug 'vim-syntastic/syntastic' 
+"Plug 'python-mode/python-mode'
+Plug 'liuchengxu/space-vim-theme'
+Plug 'morhetz/gruvbox'
+" Plug 'tmhedberg/matchit'
+Plug 'https://github.com/adelarsq/vim-matchit'
+Plug 'tpope/vim-surround'
+Plug 'posva/vim-vue'
+Plug 'FrenzyExists/aquarium-vim'
+Plug 'arcticicestudio/nord-vim'
 
-else
-    " if old vim, set vanilla autoindenting on
-    set autoindent
+call plug#end()
 
-endif " has("autocmd")
-
-
-" enable automatic yanking to and pasting from the selection
-set clipboard+=unnamed
-
-
-
-" places to look for tags files:
-set tags=./tags,tags
-" recursively search file's parent dirs for tags file
-" set tags+=./tags;/
-" recursively search cwd's parent dirs for tags file
-set tags+=tags;/
-
-"autocompletion
-inoremap <c-space> <c-n>
-inoremap <c-s-space> <c-p>
-
-
-" =====STATUS LINE OF DEATH!!=====
-set statusline=
-" filename, relative to cwd
-set statusline+=%f
-" separator
-set statusline+=\ 
-
-" modified flag
-set statusline+=%#wildmenu#
-set statusline+=%m
-set statusline+=%*
-
-"Display a warning if file encoding isnt utf-8
-set statusline+=%#question#
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-set statusline+=%*
-
-"display a warning if fileformat isnt unix
-set statusline+=%#directory#
-set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-set statusline+=%*
-
-"display a warning if files contains tab chars
-set statusline+=%#warningmsg#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%*
-
-" read-only
-set statusline+=%r
-set statusline+=%*
-
-" right-align
-set statusline+=%=
-
-" filetype
-set statusline+=%{strlen(&ft)?&ft:'none'}
-" separator
-set statusline+=\ 
-
-" current char
-set statusline+=%3b,0x%02B
-" separator
-set statusline+=\ 
-
-" column,
-set statusline+=%2c,
-" current line / lines in file
-set statusline+=%l/%L
-
-" always show status line
-set laststatus=2
-
-" return '[tabs]' if tab chars in file, or empty string
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-
-        if tabs
-            let b:statusline_tab_warning = '[tabs]'
-        else
-            let b:statusline_tab_warning = ''
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+colorscheme space_vim_theme 
+set background=dark
+hi CocSearch ctermfg=lightblue
