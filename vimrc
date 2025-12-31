@@ -2,9 +2,10 @@ set hlsearch
 " set nuset tabstop=2 
 set nu
 set ruler
-set softtabstop=0 
 set expandtab 
-set shiftwidth=2 
+set tabstop=2
+set softtabstop=0 
+set shiftwidth=2
 set smarttab 
 set re=2
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
@@ -33,38 +34,37 @@ inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<cr>"
 
 autocmd BufNewFile,BufRead *.jpp set syntax=python
+autocmd BufNewFile,BufRead *.heex set syntax=html
+autocmd VimEnter * Copilot disable
 " autocmd BufNewFile,BufRead *.hx set syntax=cs
 
-call plug#begin('~/.vim/plugged')
+" treat .jinja files as .html files
+autocmd BufNewFile,BufRead *.jinja set filetype=html
+
+call plug#begin('~/.config/nvim/plugged')
 set wrap!" Plug 'Shougo/deoplete.nvim'
 
-let g:coc_global_extensions = ['coc-jedi', 'coc-rls', 'coc-tsserver', 'coc-rust-analyzer', 'coc-clangd']
+let g:coc_global_extensions = ['coc-rust-analyzer', 'coc-clangd', 'coc-html', 'coc-pyright', 'coc-tsserver']
+"'@yaegassy/coc-ty']
 let NerdTreeChDirMode=2
+let g:rainbow_active=1
 
 " Plug 'roxma/nvim-yarp'
 " Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'ocaml/vim-ocaml'
-Plug 'Tetralux/odin.vim'
-Plug 'iamcco/coc-angular'
-Plug 'evanleck/vim-svelte'
 Plug 'zah/nim.vim'
+Plug 'iamcco/coc-angular'
+Plug 'folke/tokyonight.nvim'
+Plug 'vim-crystal/vim-crystal'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'hylang/vim-hy'
 Plug 'makerj/vim-pdf'
-Plug 'Quramy/tsuquyomi'
-Plug 'ziglang/zig.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'lark-parser/vim-lark-syntax'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
 Plug 'scrooloose/nerdtree'
 Plug 'jdonaldson/vaxe'
-Plug 'calviken/vim-gdscript3'
-Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
+Plug 'gleam-lang/gleam.vim'
 "Plug 'vim-syntastic/syntastic' 
 "Plug 'python-mode/python-mode'
 Plug 'liuchengxu/space-vim-theme'
@@ -75,9 +75,16 @@ Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
 Plug 'FrenzyExists/aquarium-vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'dart-lang/dart-vim-plugin'
+
 
 call plug#end()
 
-colorscheme space_vim_theme 
+" colorscheme space_vim_theme 
+colorscheme tokyonight
 set background=dark
 hi CocSearch ctermfg=lightblue
+
+lua << EOF
+EOF
